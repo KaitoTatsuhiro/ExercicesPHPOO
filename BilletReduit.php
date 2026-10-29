@@ -1,10 +1,9 @@
 <?php
-include 'BilletPleinTarif.php';
 class BilletReduit extends BilletPleinTarif{
     private string $justificatif;
 
-    public function __construct(int $newNumero, float $newPrix, string $newJustificatif){
-        parent::__construct($newNumero, $newPrix);
+    public function __construct(int $newNumero, float $newPrix, Seance $newSeance, string $newJustificatif){
+        parent::__construct($newNumero, $newPrix, $newSeance);
         $this->justificatif = $newJustificatif;
     }
 
@@ -16,7 +15,7 @@ class BilletReduit extends BilletPleinTarif{
     }
 
     public function calculerPrix():float{
-        $result = parent::getPrix();
-        return ($result*(30/100));
+        $this->justificatif;
+        return parent::getPrix() *  0.30;
     }
 }

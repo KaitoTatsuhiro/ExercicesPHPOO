@@ -1,13 +1,13 @@
 <?php
-include 'Seance.php';
 class BilletPleinTarif{
     private int $numero;
     private float $prix;
     private Seance $seance;
 
-    public function __construct(int $newNumero, float $newPrix){
+    public function __construct(int $newNumero, float $newPrix, Seance $newSeance){
         $this->numero = $newNumero;
         $this->prix = $newPrix;
+        $this->seance = $newSeance;
     }
     public function getNumero():int{
         return $this->numero;
@@ -35,6 +35,6 @@ class BilletPleinTarif{
         return $this->prix;
     }
     public function imprimerDetail(): void{
-        echo "La séance de déroulera le {parent::getdate()} à {parent::getHeure()} et le film sera: {parent::getFilm()} votre numéro de billet est le: {$this->numero}";
+        echo "La séance de dérouleras le {$this->seance->getDate()} à {$this->seance->getHeure()} et le film sera: {$this->seance->getFilm()} votre numéro de billet est le: {$this->numero}";
     }
 }

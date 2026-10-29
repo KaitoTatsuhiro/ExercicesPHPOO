@@ -7,6 +7,7 @@
 </head>
 <body>
     <?php 
-include ''; ?>
+include 'cinema.php';
+ ?>
 </body>
 </html>
