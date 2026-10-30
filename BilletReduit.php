@@ -10,12 +10,13 @@ class BilletReduit extends BilletPleinTarif{
     public function getJustificatif() :string {
         return $this->justificatif;        
     }
-    public function setJustificatif(string $newJustificatif): void{
+    public function setJustificatif(string $newJustificatif): self{
         $this->justificatif = $newJustificatif;
+        return $this;
     }
 
     public function calculerPrix():float{
-        $this->justificatif;
+        echo "<p>{$this->justificatif}</p>";
         return parent::getPrix() *  0.30;
     }
 }

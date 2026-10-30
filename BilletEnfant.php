@@ -10,12 +10,13 @@ class BilletEnfant extends BilletPleinTarif{
     public function getAge():int{
         return $this->age;
     }
-    public function setAge(int $newAge): void{
+    public function setAge(int $newAge): self{
         $this->age = $newAge;
+        return $this;
     }
 
     public function calculerPrix():float{
-        $this->age;
-        return parent::getPrix();
+        echo "<p>{$this->age} ans</p>";
+        return parent::calculerPrix();
     }
 }

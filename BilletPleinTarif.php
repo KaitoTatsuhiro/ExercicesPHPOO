@@ -12,29 +12,33 @@ class BilletPleinTarif{
     public function getNumero():int{
         return $this->numero;
     }
-    public function setNumero(int $newNumero):void{
+    public function setNumero(int $newNumero):self{
         $this->numero = $newNumero;
+        return $this;
     }
 
     public function getPrix():float{
         return $this->prix;
     }
-    public function setPrix(float $newPrix):void{
+    public function setPrix(float $newPrix):self{
         $this->prix = $newPrix;
+        return $this;
     }
 
     public function getSeance():Seance{
         return $this->seance;
     }
-    public function setSeance(Seance $newSeance):void{
+    public function setSeance(Seance $newSeance):self{
         $this->seance = $newSeance;
+        return $this;
     }
     
 
     public function calculerPrix(): float{
         return $this->prix;
     }
-    public function imprimerDetail(): void{
+    public function imprimerDetail(): self{
         echo "La séance de dérouleras le {$this->seance->getDate()} à {$this->seance->getHeure()} et le film sera: {$this->seance->getFilm()} votre numéro de billet est le: {$this->numero}";
+        return $this;
     }
 }
