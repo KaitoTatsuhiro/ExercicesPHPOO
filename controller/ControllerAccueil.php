@@ -85,13 +85,21 @@ class ControllerAccueil{
 
     public function rendu(){
         $data = $this->modelAccueil->produitCategorie();
-
+        $htmlProduits = "";
         switch(gettype($data)){
             case "string":
                 $this->viewAccueil->setMessageError($data)->display();
+                break;
             case "array":
-                $this->viewAccueil->setData($data)->display();
                 
+                $htmlProduits = "";
+                $this->viewAccueil->setData($data);
+                foreach($data as $tab){
+                $htmlProduits .= "<li>{$tab["nom_produit"]} : {$tab["nom_categorie"]}</li>";
+                }
+                $this->viewAccueil->setProduct($htmlProduits);
+                $this->viewAccueil->display();
+                break;
         }
     }
 

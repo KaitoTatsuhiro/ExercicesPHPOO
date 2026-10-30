@@ -1,8 +1,9 @@
 <?php
 class ViewAccueil{
     //ATTRIBUT
-    private array $data;
-    private string $messageError;
+    private string $product = "";
+    private array $data =[];
+    private string $messageError = "";
 
     //SETTER ET GETTER
     /**
@@ -50,6 +51,28 @@ class ViewAccueil{
         $this->messageError = $messageError;
         return $this;
     }
+    /**
+     * Get the value of product
+     *
+     * @return string
+     */
+    public function getProduct(): string
+    {
+        return $this->product;
+    }
+
+    /**
+     * Set the value of product
+     *
+     * @param string $product
+     *
+     * @return self
+     */
+    public function setProduct(string $product): self
+    {
+        $this->product = $product;
+        return $this;
+    }
     //METHOD
     public function display(){
     ?>
@@ -72,10 +95,18 @@ class ViewAccueil{
                     }
                 ?>
             </ul>
+            <h1>Liste de Produits : 2nd Méthode</h1>
+            <ul>
+            <?php
+                echo $this->product;
+            ?>
+        </ul>
         </main>
     </body>
     </html>
     <?php
     }
+    
+
     
 }
