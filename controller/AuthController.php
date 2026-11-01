@@ -8,11 +8,9 @@ class AuthController{
     private RegisterView $registerView;
     private LoginView $loginView;
     //CONSTRUCT
-    public function __construct(User $newUser, RegisterView $newRegisterView, LoginView $newLoginView)
+    public function __construct(User $newUser)
     {
         $this->user = $newUser;
-        $this->registerView = $newRegisterView;
-        $this->loginView = $newLoginView;
     }
     // #region GETTER ET SETTER
     /**
@@ -81,6 +79,7 @@ class AuthController{
 
     //Fonction pour s'inscrire
     public function register(): void {
+        $this->registerView = new RegisterView();
         if(isset($_POST['submit'])){
             $prenom = trim($_POST['prenom'] ?? '');
             $nom    = trim($_POST['nom'] ?? '');
@@ -112,6 +111,7 @@ class AuthController{
 
     //Fonction pour se connecter
     public function login():void{
+        $this->loginView = new LoginView();
         if(isset($_POST['submitCo'])){
             $email = trim($_POST['emailCo'] ?? '');
             $mdp   = $_POST['passwordCo'] ?? '';

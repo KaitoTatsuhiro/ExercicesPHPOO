@@ -1,17 +1,13 @@
 <?php
 class User{
     //ATTRIBUT
-    private string $prenom;
-    private string $nom;
-    private string $email;
-    private string $password;
+    private string $prenom = ''; //Si les paramètre à envoyé son null par defaut, il vaut mieux les indiqué ici
+    private string $nom = '';
+    private string $email = '';
+    private string $password = '';
     private PDO $pdo;
     //CONSTRUCT
-    public function __construct(string $newPrenom, string $newNom, string $newEmail, string $newPassword, PDO $newPdo){
-        $this->prenom = $newPrenom;
-        $this->nom = $newNom;
-        $this->email = $newEmail;
-        $this->password = $newPassword;
+    public function __construct(PDO $newPdo){
         $this->pdo = $newPdo;
     }
     // #region GETTER ET SETTER

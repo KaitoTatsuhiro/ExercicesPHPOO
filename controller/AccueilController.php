@@ -6,10 +6,10 @@ class AccueilController{
     private User $user;
     private AccueilView $accueilView;
     //CONSTRUCT
-    public function __construct(User $newUser, AccueilView $newAccueilView)
+    public function __construct(User $newUser)
     {
         $this->user = $newUser;
-        $this->accueilView = $newAccueilView;
+        $this->accueilView = new AccueilView();//On crée sa propre vue pour alléger le code
     }
     // #region GETTER ET SETTER
     /**
