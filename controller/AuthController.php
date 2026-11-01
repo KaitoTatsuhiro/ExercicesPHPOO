@@ -82,10 +82,10 @@ class AuthController{
     //Fonction pour s'inscrire
     public function register(): void {
         if(isset($_POST['submit'])){
-            $prenom = trim($_POST['prenom']);
-            $nom    = trim($_POST['nom']);
-            $email  = trim($_POST['email']);
-            $mdp    = $_POST['password'];
+            $prenom = trim($_POST['prenom'] ?? '');
+            $nom    = trim($_POST['nom'] ?? '');
+            $email  = trim($_POST['email'] ?? '');
+            $mdp    = $_POST['password'] ?? '';
 
             if ($prenom === '' || $nom === '' || $email === '' || $mdp === '') {
                 $this->registerView->setMessageError("Veuillez remplir tous les champs du formulaire.");
@@ -113,8 +113,8 @@ class AuthController{
     //Fonction pour se connecter
     public function login():void{
         if(isset($_POST['submitCo'])){
-            $email = trim($_POST['emailCo']);
-            $mdp   = $_POST['passwordCo'];
+            $email = trim($_POST['emailCo'] ?? '');
+            $mdp   = $_POST['passwordCo'] ?? '';
             //2) Vérifier que les champs sont remplis
             if($email === '' || $mdp === ''){
                 $this->loginView->setMessageError('Veuillez remplir tous les champs');
