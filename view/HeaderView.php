@@ -17,7 +17,7 @@ class HeaderView extends View{
             //Mise à jour du menu de navigation : ajout du bouton de déconnexion
             $nav = "<a href='index.php?page=logout'>Se Déconnecter</a>";
         }else{
-            $nav .= "<a href='index.php?page=register'>S'inscrire</a> <a href='index.php?page=login'>Se connecter</a>";
+            $nav .= "<a href='index.php?page=accueil'>Accueil</a> <a href='index.php?page=register'>S'inscrire</a> <a href='index.php?page=login'>Se connecter</a>";
         }
         ?>
         <!DOCTYPE html>
