@@ -1,7 +1,7 @@
 <?php
-require_once 'View.php';
-require_once 'HeaderView.php';
-require_once 'FooterView.php';
+require_once './view/View.php';
+require_once './view/HeaderView.php';
+require_once './view/FooterView.php';
 class AccueilView extends View{
     //ATTRIBUT
     
@@ -12,9 +12,7 @@ class AccueilView extends View{
     //METHOD
     public function display(): void
     {
-        (new HeaderView())->display();
         ?>
-        <h1>Page d'Accueil</h1>
         <section>
             <h2>Listes des utilisateurs</h2>
             <ul>

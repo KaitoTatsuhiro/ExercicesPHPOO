@@ -1,14 +1,15 @@
 <?php
-class User{
+    require_once './model/Model.php';
+class ModelUser extends Model{
     //ATTRIBUT
     private string $prenom = ''; //Si les paramètre à envoyé son null par defaut, il vaut mieux les indiqué ici
     private string $nom = '';
     private string $email = '';
     private string $password = '';
-    private PDO $pdo;
+
     //CONSTRUCT
     public function __construct(PDO $newPdo){
-        $this->pdo = $newPdo;
+        parent::__construct($newPdo);
     }
     // #region GETTER ET SETTER
     /**
@@ -94,32 +95,11 @@ class User{
         $this->password = $password;
         return $this;
     }
-
-    /**
-     * Get the value of pdo
-     *
-     * @return PDO
-     */
-    public function getPdo(): PDO {
-        return $this->pdo;
-    }
-
-    /**
-     * Set the value of pdo
-     *
-     * @param PDO $pdo
-     *
-     * @return self
-     */
-    public function setPdo(PDO $pdo): self {
-        $this->pdo = $pdo;
-        return $this;
-    }
     // #endregion
     //METHOD
     public function addUser():string{
         try{
-            $request = $this->pdo->prepare('INSERT INTO users (firstname, lastname, email, `password`) VALUES(?, ?, ?, ?)');
+            $request = parent::getPdo()->prepare('INSERT INTO users (firstname, lastname, email, `password`) VALUES(?, ?, ?, ?)');
 
             //C. BindParam pour remplir les ? au sein de la requête
             $request->bindParam(1,$this->prenom,PDO::PARAM_STR);
@@ -138,7 +118,7 @@ class User{
     }
     public function checkEmail():array | string{
         try{
-            $request = $this->pdo->prepare('SELECT u.firstname, u.lastname, u.email FROM users u WHERE u.email = ?');
+            $request = parent::getPdo()->prepare('SELECT u.firstname, u.lastname, u.email FROM users u WHERE u.email = ?');
 
             //BindParam() pour injecter l'email dans la requête
             $request->bindParam(1,$this->email,PDO::PARAM_STR);
@@ -153,7 +133,7 @@ class User{
     }
     public function loginUser():array | string{
         try{
-            $request = $this->pdo->prepare('SELECT u.id_user, u.firstname, u.lastname, u.email, u.`password`, u.created_at, r.`role` FROM users u INNER JOIN roles r ON u.id_role = r.id_role WHERE u.email = ?');
+            $request = parent::getPdo()->prepare('SELECT u.id_user, u.firstname, u.lastname, u.email, u.`password`, u.created_at, r.`role` FROM users u INNER JOIN roles r ON u.id_role = r.id_role WHERE u.email = ?');
 
             //C. BindParam
             $request->bindParam(1,$this->email,PDO::PARAM_STR);
@@ -169,10 +149,10 @@ class User{
     }
     public function getDetail():array | string{
         try{
-            $request = $this->pdo->prepare('SELECT u.id_user, u.firstname, u.lastname, u.email, u.created_at, r.`role` FROM users u INNER JOIN roles r ON u.id_role = r.id_role WHERE u.id_user = ?');
+            $request = parent::getPdo()->prepare('SELECT u.id_user, u.firstname, u.lastname, u.email, u.created_at, r.`role` FROM users u INNER JOIN roles r ON u.id_role = r.id_role WHERE u.id_user = ?');
 
             //C. BindParam
-            $request->bindParam(1,$_SESSION['id_user'],PDO::PARAM_INT);
+            $request->bindParam(1,$_SESSION['id'],PDO::PARAM_INT);
 
             //D. Exécution de la requête
             $request->execute();
@@ -185,7 +165,7 @@ class User{
     }
     public function getAll():array | string{
         try{
-            $request = $this->pdo->prepare('SELECT u.firstname, u.lastname, u.email FROM users u');
+            $request = parent::getPdo()->prepare('SELECT u.firstname, u.lastname, u.email FROM users u');
 
             //C. Exécuter la requête
             $request->execute();
@@ -193,6 +173,26 @@ class User{
             //D. Récupérer le tableau de données renvoyé par la BDD
             return $request->fetchAll(PDO::FETCH_ASSOC);
 
+        }catch(Exception $error){
+            return $error->getMessage();
+        }
+    }
+    public function modifyUser():string{
+        try{
+            $request = parent::getPdo()->prepare('UPDATE users SET firstname = ?, lastname = ?, email= ?, `password`= ? WHERE id_user = ?');
+
+            //C. BindParam pour remplir les ? au sein de la requête
+            $request->bindParam(1,$this->prenom,PDO::PARAM_STR);
+            $request->bindParam(2,$this->nom,PDO::PARAM_STR);
+            $request->bindParam(3,$this->email,PDO::PARAM_STR);
+            $request->bindParam(4,$this->password,PDO::PARAM_STR);
+            $request->bindParam(5,$_SESSION['id'],PDO::PARAM_INT);
+
+            //D. Envoyer la requête à la BDD, pour exécution
+            $request->execute();
+
+            //E. Message de confirmation
+            return "Votre compte à bien été modifié :  {$this->prenom} {$this->nom} - {$this->email}";
         }catch(Exception $error){
             return $error->getMessage();
         }

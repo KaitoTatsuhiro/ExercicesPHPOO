@@ -5,20 +5,18 @@ $uri = $_GET['page'] ?? '';
 
 require_once 'controller/AccueilController.php';
 require_once 'controller/AuthController.php';
+require_once 'model/ModelUser.php';
 $pdo= new PDO('mysql:host=localhost;dbname=todos','root','root');
-$user = new User($pdo);
+$user = new ModelUser($pdo);
 switch($uri){
-    case 'register':
-        (new AuthController($user))->register();
-        break;
-    case 'login':
-        (new AuthController($user))->login();
-        break;
     case 'logout':
         (new AuthController($user))->logout();
         break;
     case 'compte':
         (new AuthController($user))->account();
+        break;
+    case 'modify':
+        (new AuthController($user))->modify();
         break;
     case '':
     case 'accueil':

@@ -11,7 +11,6 @@ class LoginView extends View{
 
     //METHOD
     public function display():void{
-        (new HeaderView())->display();
         ?>
     <section>
         <h2>Connexion</h2>
@@ -25,6 +24,5 @@ class LoginView extends View{
         </p>
     </section>
     <?php
-        (new FooterView())->display();
     }
 }

@@ -11,15 +11,22 @@ class AccountView extends View{
 
     //METHOD
     public function display():void{
-        (new HeaderView())->display();
         ?>
-    <section>
-        <h2>Compte</h2>
-        <p>
-            <?php echo ($this->getMessageError()); ?>
-        </p>
-    </section>
-    <?php
-        (new FooterView())->display();
+        <main>
+            <h2>Compte</h2>
+            <section>
+                <p>
+                    <?php echo ($this->getMessageError()); ?>
+                </p>
+            </section>
+            <section>
+                <form action="" method="get">
+                    <a href='index.php?page=modify'>Modifier</a>
+                    <p>Attention, action irréversible.</p>
+                    <a href='index.php?page=delete'>Supprimer le compte</a>
+                </form>
+            </section>
+        </main>
+        <?php
     }
 }

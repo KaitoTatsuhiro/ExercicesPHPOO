@@ -11,9 +11,9 @@ class RegisterView extends View{
 
     //METHOD
     public function display():void{
-        (new HeaderView())->display();
         ?>
             <main>
+        <h1>Page d'Accueil</h1>
                 <section>
                     <h2>Inscription</h2>
                     <form action="" method="post">
@@ -29,6 +29,5 @@ class RegisterView extends View{
                 </section>
             </main>
         <?php
-        (new FooterView())->display();
     }
 }
