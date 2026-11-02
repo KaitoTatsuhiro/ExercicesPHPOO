@@ -54,42 +54,50 @@ class AuthController extends Controller{
 
             parent::getModelUser()->setEmail($_SESSION['email']);
             $data = parent::getModelUser()->loginUser();
-            
-            if ($prenom === '' && $nom === '' && $email === '' && $amdp === '' && ($mdp === '' || $mdp2 === '')) {
-                parent::getModifyView()->setMessageError("Veuillez remplir au moins un champs du formulaire.");
+            if ($prenom !== '') {
                 $update['firstname'] = $prenom;
+            }
+            if ($nom !== '') {
                 $update['lastname'] = $nom;
-            } elseif($email !== ''){
+            }
+            if ($email !== '') {
                 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                parent::getModifyView()->setMessageError("Votre email n'est pas au bon format.");
-                parent::getModifyView()->display();
-                return;
+                    parent::getModifyView()->setMessageError("Votre email n'est pas au bon format.");
+                    parent::getModifyView()->display();
+                    return;
                 }
                 $update['email'] = $email;
-            } elseif($mdp !==''){
-                if ($mdp != $mdp2){
-                parent::getModifyView()->setMessageError("Les deux mot de passe ne concordent pas.");
-                parent::getModifyView()->display();
-                return;
-                }
-                if (mb_strlen($mdp, 'UTF-8') < 12 && mb_strlen($mdp2, 'UTF-8') < 12) {
-                parent::getModifyView()->setMessageError("Votre mot de passe doit faire au moins 12 caractères.");
-                parent::getModifyView()->display();
-                return;
-                }
-                if (!password_verify($amdp, $data['password'])){
-                parent::getModifyView()->setMessageError("Mot de passe incorrect.");
-                parent::getModifyView()->display();
-                return;
-                }
-                $update['mdp'] = password_hash($mdp, PASSWORD_DEFAULT);
             }
-                
-                $result = parent::getModelUser()->modifyUser($update);
-                    parent::getModifyView()->setMessageError($result);
-            
+
+            if ($mdp !== '' || $mdp2 !== '') {
+                if ($mdp !== $mdp2) {
+                    parent::getModifyView()->setMessageError("Les deux mots de passe ne concordent pas.");
+                    parent::getModifyView()->display();
+                    return;
+                }
+                if (mb_strlen($mdp, 'UTF-8') < 12) {
+                    parent::getModifyView()->setMessageError("Votre mot de passe doit faire au moins 12 caractères.");
+                    parent::getModifyView()->display();
+                    return;
+                }
+                if (!password_verify($amdp, $data['password'])) {
+                    parent::getModifyView()->setMessageError("Ancien mot de passe incorrect.");
+                    parent::getModifyView()->display();
+                    return;
+                }
+                $update['password'] = password_hash($mdp, PASSWORD_DEFAULT);
+            }
+
+            // Rien à modifier
+            if (empty($update)) {
+                parent::getModifyView()->setMessageError("Veuillez remplir au moins un champ du formulaire.");
+                parent::getModifyView()->display();
+                return;
+            }
+            $result = parent::getModelUser()->modifyUser($update);
+            parent::getModifyView()->setMessageError($result); // idéalement un setMessageSuccess
+            parent::getModifyView()->display();
         }
-        parent::getModifyView()->display();
     }
 
     public function delete(): void{
