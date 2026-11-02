@@ -16,8 +16,10 @@ class AccueilController extends Controller{
         if ($message == 'deleted'){
             echo "Compte supprimé avec succès.";
         }
+        if(!isset($_SESSION['id'])){
         $this->registerUser();
         $this->connectUser();
+        }
         $this->displayUser();
         (new FooterView())->display();
     }
