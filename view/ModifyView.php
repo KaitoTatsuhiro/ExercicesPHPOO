@@ -11,6 +11,10 @@ class ModifyView extends View{
 
     //METHOD
     public function display():void{
+        if(!isset($_SESSION['id'])){
+            header('Location: index.php');
+            }
+        (new HeaderView('Modifier compte'))->display();
         ?>
             <main>
                 <section>

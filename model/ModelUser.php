@@ -197,4 +197,23 @@ class ModelUser extends Model{
             return $error->getMessage();
         }
     }
+
+    public function deleteUser():string{
+        try{
+            $request = parent::getPdo()->prepare('DELETE FROM users WHERE id_user = ?');
+
+            //C. BindParam pour remplir les ? au sein de la requête
+            $request->bindParam(1,$_SESSION['id'],PDO::PARAM_INT);
+
+            //D. Envoyer la requête à la BDD, pour exécution
+            $request->execute();
+            $_SESSION = [];
+            session_destroy();
+            header('Location: index.php?message=deleted');
+            //E. Message de confirmation
+            exit;
+        }catch(Exception $error){
+            return $error->getMessage();
+        }
+    }
 }

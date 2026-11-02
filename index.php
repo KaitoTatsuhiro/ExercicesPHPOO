@@ -18,6 +18,9 @@ switch($uri){
     case 'modify':
         (new AuthController($user))->modify();
         break;
+        case 'delete':
+        (new AuthController($user))->delete();
+        break;
     case '':
     case 'accueil':
     default:

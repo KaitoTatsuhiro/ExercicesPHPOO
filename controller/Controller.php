@@ -5,6 +5,7 @@ require_once './view/RegisterView.php';
 require_once './view/LoginView.php';
 require_once './view/AccountView.php';
 require_once './view/ModifyView.php';
+require_once './view/DeleteView.php';
 class Controller{
     //ATTRIBUT
     private ModelUser $modelUser;
@@ -13,6 +14,7 @@ class Controller{
     private LoginView $loginView;
     private AccountView $accountView;
     private ModifyView $modifyView;
+    private DeleteView $deleteView;
     // #region GETTER ET SETTER
     
 
@@ -152,6 +154,29 @@ class Controller{
         $this->modifyView = $modifyView;
         return $this;
     }
+    
+    /**
+     * Get the value of deleteView
+     *
+     * @return DeleteView
+     */
+    public function getDeleteView(): DeleteView
+    {
+        return $this->deleteView;
+    }
+
+    /**
+     * Set the value of deleteView
+     *
+     * @param DeleteView $deleteView
+     *
+     * @return self
+     */
+    public function setDeleteView(DeleteView $deleteView): self
+    {
+        $this->deleteView = $deleteView;
+        return $this;
+    }
     // #endregion
     //CONSTRUCT
     public function __construct(ModelUser $newModelUser)
@@ -162,10 +187,12 @@ class Controller{
         $this->loginView = new LoginView();
         $this->accountView = new AccountView();
         $this->modifyView = new ModifyView();
+        $this->deleteView = new DeleteView();
     }
     //METHODS
     public function render():void{
 
     }
+
 
 }

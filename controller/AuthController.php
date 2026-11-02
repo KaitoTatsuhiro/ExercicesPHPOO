@@ -61,7 +61,15 @@ class AuthController extends Controller{
                     parent::getModifyView()->setMessageError(parent::getModelUser()->ModifyUser());
             }
         }
+        parent::getModifyView()->display();
     }
 
+    public function delete(): void{
+        if(isset($_POST['delete'])){
+            parent::getModelUser()->deleteUser();
+        }
+        parent::getDeleteView()->display();
+    }
 }
+
 

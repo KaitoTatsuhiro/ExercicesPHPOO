@@ -12,6 +12,10 @@ class AccueilController extends Controller{
 
     public function render():  void{
         (new HeaderView('Accueil'))->display();
+        $message = $_GET['message'] ?? '';
+        if ($message == 'deleted'){
+            echo "Compte supprimé avec succès.";
+        }
         $this->registerUser();
         $this->connectUser();
         $this->displayUser();
