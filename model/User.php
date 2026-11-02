@@ -167,6 +167,22 @@ class User{
             return $error->getMessage();
         }
     }
+    public function getDetail():array | string{
+        try{
+            $request = $this->pdo->prepare('SELECT u.id_user, u.firstname, u.lastname, u.email, u.created_at, r.`role` FROM users u INNER JOIN roles r ON u.id_role = r.id_role WHERE u.id_user = ?');
+
+            //C. BindParam
+            $request->bindParam(1,$_SESSION['id_user'],PDO::PARAM_INT);
+
+            //D. Exécution de la requête
+            $request->execute();
+
+            //E. Récupération des données dans un tableau associatif
+            return $request->fetch(PDO::FETCH_ASSOC);
+        }catch(Exception $error){
+            return $error->getMessage();
+        }
+    }
     public function getAll():array | string{
         try{
             $request = $this->pdo->prepare('SELECT u.firstname, u.lastname, u.email FROM users u');

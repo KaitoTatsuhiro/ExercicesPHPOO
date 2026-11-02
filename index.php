@@ -17,6 +17,9 @@ switch($uri){
     case 'logout':
         (new AuthController($user))->logout();
         break;
+    case 'compte':
+        (new AuthController($user))->account();
+        break;
     case '':
     case 'accueil':
     default:

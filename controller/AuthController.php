@@ -2,11 +2,13 @@
 require_once './model/User.php';
 require_once './view/RegisterView.php';
 require_once './view/LoginView.php';
+require_once './view/AccountView.php';
 class AuthController{
     //ATTRIBUT
     private User $user;
     private RegisterView $registerView;
     private LoginView $loginView;
+    private AccountView $accountView;
     //CONSTRUCT
     public function __construct(User $newUser)
     {
@@ -74,6 +76,28 @@ class AuthController{
         $this->loginView = $loginView;
         return $this;
     }
+        /**
+     * Get the value of accountView
+     *
+     * @return AccountView
+     */
+    public function getAccountView(): AccountView
+    {
+        return $this->accountView;
+    }
+
+    /**
+     * Set the value of accountView
+     *
+     * @param AccountView $accountView
+     *
+     * @return self
+     */
+    public function setAccountView(AccountView $accountView): self
+    {
+        $this->accountView = $accountView;
+        return $this;
+    }
     // #endregion
     //METHOD
 
@@ -131,7 +155,6 @@ class AuthController{
                 //F. Vérifier si les données sont vide ou non
                 if(is_array($data) && !empty($data) && password_verify($mdp, $data['password'])){
                     //H. Connecter l'utilisateur
-                    $list = $this->user->loginUser();
                     $_SESSION['role'] = $data['role'];
                     $_SESSION['id'] = $data['id_user'];
                     $_SESSION['nom'] = $data['lastname'];
@@ -149,10 +172,36 @@ class AuthController{
             }
             $this->loginView->display();
     }
+
+    //Fonction déconnection
     public function logout(): void {
     $_SESSION = [];
     session_destroy();
     header('Location: index.php');
     exit;
+    }
+
+    //Fonction afficher info du compte connecté
+    public function account(): void{
+        $this->accountView = new AccountView();
+        $data = $this->user->getDetail();
+        $userList = "";
+        switch(gettype($data)){
+            case "string":
+                $this->accountView->setMessageError($data)->display();
+                break;
+            case "array":
+                    $userList .= "<ul>";
+                    $userList .= "test";
+                    $userList .= "<li>{$data["firstname"]} {$data["lastname"]}</li>";
+                    $userList .= "<li>{$data["role"]}</li>";
+                    $userList .= "<li>{$data["email"]}</li>";
+                    $userList .= "<li>{$data["created_at"]}</li>";
+                    $userList .= "</ul>";
+                $this->accountView->setMessageError($userList)->display();
+                break;
+            default:
+                $this->accountView->setMessageError(gettype($data))->display();
+        }
     }
 }

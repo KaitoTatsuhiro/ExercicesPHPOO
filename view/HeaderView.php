@@ -15,7 +15,7 @@ class HeaderView extends View{
         //Vérifier si quelqu'un est connecté
         if(isset($_SESSION['id'])){
             //Mise à jour du menu de navigation : ajout du bouton de déconnexion
-            $nav = "<a href='index.php?page=accueil'>Accueil</a> <a href='index.php?page=logout'>Se Déconnecter</a>";
+            $nav = "<a href='index.php?page=accueil'>Accueil</a> <a href='index.php?page=compte'>Compte</a> <a href='index.php?page=logout'>Se Déconnecter</a>";
         }else{
             $nav .= "<a href='index.php?page=accueil'>Accueil</a> <a href='index.php?page=register'>S'inscrire</a> <a href='index.php?page=login'>Se connecter</a>";
         }
