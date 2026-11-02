@@ -21,6 +21,7 @@ class RegisterView extends View{
                         <label for="nom">Nom <input type="text" name="nom" id="nom"></label>
                         <label for="email">Email <input type="email" name="email" id="email"></label>
                         <label for="password">Mot de Passe <input type="password" name="password" id="password"></label>
+                        <label for="password2">Confirmation du mot de Passe <input type="password" name="password2" id="password2"></label>
                         <input type="submit" name="submit">
                     </form>
                     <p>

@@ -177,22 +177,24 @@ class ModelUser extends Model{
             return $error->getMessage();
         }
     }
-    public function modifyUser():string{
+    public function modifyUser(array $fields):string{
         try{
-            $request = parent::getPdo()->prepare('UPDATE users SET firstname = ?, lastname = ?, email= ?, `password`= ? WHERE id_user = ?');
-
-            //C. BindParam pour remplir les ? au sein de la requête
-            $request->bindParam(1,$this->prenom,PDO::PARAM_STR);
-            $request->bindParam(2,$this->nom,PDO::PARAM_STR);
-            $request->bindParam(3,$this->email,PDO::PARAM_STR);
-            $request->bindParam(4,$this->password,PDO::PARAM_STR);
-            $request->bindParam(5,$_SESSION['id'],PDO::PARAM_INT);
-
+            $sets = [];
+            $values = [];
+            foreach ($fields as $column => $value) {
+            $sets[] = "$column = ?";
+            $values[] = $value;
+        }
+            $values[] = $_SESSION['id'];
+            $sql = "UPDATE users SET " . implode(', ', $sets) . " WHERE id_user = ?";
+        
+            $request = parent::getPdo()->prepare($sql);
+            
             //D. Envoyer la requête à la BDD, pour exécution
-            $request->execute();
+            $request->execute($values);
 
             //E. Message de confirmation
-            return "Votre compte à bien été modifié :  {$this->prenom} {$this->nom} - {$this->email}";
+            return "Votre compte à bien été modifié";
         }catch(Exception $error){
             return $error->getMessage();
         }

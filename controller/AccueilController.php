@@ -30,13 +30,16 @@ class AccueilController extends Controller{
             $nom    = trim($_POST['nom'] ?? '');
             $email  = trim($_POST['email'] ?? '');
             $mdp    = $_POST['password'] ?? '';
+            $mdp2    = $_POST['password2'] ?? '';
 
-            if ($prenom === '' || $nom === '' || $email === '' || $mdp === '') {
+            if ($prenom === '' || $nom === '' || $email === '' || $mdp === '' || $mdp2 === '') {
                 parent::getRegisterView()->setMessageError("Veuillez remplir tous les champs du formulaire.");
             } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 parent::getRegisterView()->setMessageError("Votre email n'est pas au bon format.");
-            } elseif (mb_strlen($mdp, 'UTF-8') < 12) {
+            } elseif (mb_strlen($mdp, 'UTF-8') < 12 && mb_strlen($mdp2, 'UTF-8') < 12) {
                 parent::getRegisterView()->setMessageError("Votre mot de passe doit faire au moins 12 caractères.");
+            }elseif ($mdp != $mdp2){
+                parent::getRegisterView()->setMessageError("Les deux mot de passe ne concordent pas.");
             } else {
                 parent::getModelUser()->setEmail($email);
                 if (!empty(parent::getModelUser()->checkEmail())) {
