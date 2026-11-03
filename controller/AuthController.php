@@ -27,10 +27,10 @@ class AuthController extends Controller{
                 break;
             case "array":
                     $userList .= "<ul>";
-                    $userList .= "<li>{$data["firstname"]} {$data["lastname"]}</li>";
-                    $userList .= "<li>{$data["role"]}</li>";
-                    $userList .= "<li>{$data["email"]}</li>";
-                    $userList .= "<li>{$data["created_at"]}</li>";
+                    $userList .= "<li>".htmlspecialchars($data["firstname"])." ".htmlspecialchars($data["lastname"])."</li>";
+                    $userList .= "<li>".htmlspecialchars($data["role"])."</li>";
+                    $userList .= "<li>".htmlspecialchars($data["email"])."</li>";
+                    $userList .= "<li>".htmlspecialchars($data["created_at"])."</li>";
                     $userList .= "</ul>";
                 parent::getAccountView()->setMessageError($userList)->display();
                 break;
@@ -95,9 +95,9 @@ class AuthController extends Controller{
                 return;
             }
             $result = parent::getModelUser()->modifyUser($update);
-            parent::getModifyView()->setMessageError($result); // idéalement un setMessageSuccess
-            parent::getModifyView()->display();
+            parent::getModifyView()->setMessageError($result);
         }
+            parent::getModifyView()->display();
     }
 
     public function delete(): void{

@@ -111,7 +111,7 @@ class ModelUser extends Model{
             $request->execute();
 
             //E. Message de confirmation
-            return "L'utilisateur a été enregistré :  {$this->prenom} {$this->nom} - {$this->email}";
+            return "L'utilisateur a été enregistré :  ".htmlspecialchars($this->prenom)."".htmlspecialchars($this->nom)." - ".htmlspecialchars($this->email);
         }catch(Exception $error){
             return $error->getMessage();
         }

@@ -14,7 +14,7 @@ class AccountView extends View{
         if(!isset($_SESSION['id'])){
             header('Location: index.php');
             }
-        (new HeaderView('Modifier compte'))->display();
+        (new HeaderView('Compte'))->display();
         ?>
         <main>
             <h2>Compte</h2>

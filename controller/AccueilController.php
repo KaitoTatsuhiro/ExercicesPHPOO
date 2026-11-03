@@ -81,12 +81,12 @@ class AccueilController extends Controller{
                 //F. Vérifier si les données sont vide ou non
                 if(is_array($data) && !empty($data) && password_verify($mdp, $data['password'])){
                     //H. Connecter l'utilisateur
-                    $_SESSION['role'] = $data['role'];
-                    $_SESSION['id'] = $data['id_user'];
-                    $_SESSION['nom'] = $data['lastname'];
-                    $_SESSION['prenom'] = $data['firstname'];
-                    $_SESSION['email'] = $data['email'];
-                    $_SESSION['createdAt'] = $data['created_at'];
+                    $_SESSION['role'] = htmlspecialchars($data['role']);
+                    $_SESSION['id'] = htmlspecialchars($data['id_user']);
+                    $_SESSION['nom'] = htmlspecialchars($data['lastname']);
+                    $_SESSION['prenom'] = htmlspecialchars($data['firstname']);
+                    $_SESSION['email'] = htmlspecialchars($data['email']);
+                    $_SESSION['createdAt'] = htmlspecialchars($data['created_at']);
                     header('Location: index.php');
                     exit;
                     
