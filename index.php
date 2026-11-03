@@ -8,21 +8,32 @@ require_once 'controller/AuthController.php';
 require_once 'model/ModelUser.php';
 $pdo= new PDO('mysql:host=localhost;dbname=todos','root','root');
 $user = new ModelUser($pdo);
+
+$accountView = new AccountView();
+$modifyView = new ModifyView();
+$deleteView = new DeleteView();
+
+$accueilView = new AccueilView();
+$registerView = new RegisterView();
+$loginView = new LoginView();
+
+$auth = new AuthController($user, $accountView, $modifyView, $deleteView);
+$accueil = new AccueilController($user, $accueilView, $registerView, $loginView);
 switch($uri){
     case 'logout':
-        (new AuthController($user))->logout();
+        $auth->logout();
         break;
     case 'compte':
-        (new AuthController($user))->account();
+        $auth->account();
         break;
     case 'modify':
-        (new AuthController($user))->modify();
+        $auth->modify();
         break;
         case 'delete':
-        (new AuthController($user))->delete();
+        $auth->delete();
         break;
     case '':
     case 'accueil':
     default:
-        (new AccueilController($user))->render();
+        $accueil->render();
 }
