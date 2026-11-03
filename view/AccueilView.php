@@ -4,11 +4,34 @@ require_once './view/HeaderView.php';
 require_once './view/FooterView.php';
 class AccueilView extends View{
     //ATTRIBUT
-    
+    private array $data;
     //CONSTRUCT
     
-    //GETTER ET SETTER
+    // #region GETTER ET SETTER
+    
+    /**
+     * Get the value of data
+     *
+     * @return array
+     */
+    public function getData(): array
+    {
+        return $this->data;
+    }
 
+    /**
+     * Set the value of data
+     *
+     * @param array $data
+     *
+     * @return self
+     */
+    public function setData(array $data): self
+    {
+        $this->data = $data;
+        return $this;
+    }
+    // #endregion
     //METHOD
     public function display(): void
     {
@@ -29,4 +52,5 @@ class AccueilView extends View{
         <?php
         (new FooterView())->display();
     }
+
 }

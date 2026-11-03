@@ -4,11 +4,34 @@ require_once 'HeaderView.php';
 require_once 'FooterView.php';
 class AccountView extends View{
     //ATTRIBUT
-
+    private string $messageError;
     //CONSTRUCT
 
-    //GETTER ET SETTER
+    // #region GETTER ET SETTER
 
+    /**
+     * Get the value of messageError
+     *
+     * @return string
+     */
+    public function getMessageError(): string
+    {
+        return $this->messageError;
+    }
+
+    /**
+     * Set the value of messageError
+     *
+     * @param string $messageError
+     *
+     * @return self
+     */
+    public function setMessageError(string $messageError): self
+    {
+        $this->messageError = $messageError;
+        return $this;
+    }
+    // #endregion
     //METHOD
     public function display():void{
         if(!isset($_SESSION['id'])){
@@ -33,4 +56,5 @@ class AccountView extends View{
         </main>
         <?php
     }
+
 }

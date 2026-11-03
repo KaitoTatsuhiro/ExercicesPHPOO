@@ -8,191 +8,83 @@ require_once './view/ModifyView.php';
 require_once './view/DeleteView.php';
 class Controller{
     //ATTRIBUT
-    private ModelUser $modelUser;
-    private AccueilView $accueilView;
-    private RegisterView $registerView;
-    private LoginView $loginView;
-    private AccountView $accountView;
-    private ModifyView $modifyView;
-    private DeleteView $deleteView;
+    private array $models = [];
+    private array $views = [];
     // #region GETTER ET SETTER
-    
-
     /**
-     * Get the value of modelUser
+     * Get the value of models
      *
-     * @return ModelUser
+     * @return array
      */
-    public function getModelUser(): ModelUser
+    public function getModels(): array
     {
-        return $this->modelUser;
+        return $this->models;
     }
 
     /**
-     * Set the value of modelUser
+     * Set the value of models
      *
-     * @param ModelUser $modelUser
+     * @param array $models
      *
      * @return self
      */
-    public function setModelUser(ModelUser $modelUser): self
+    public function setModels(array $models): self
     {
-        $this->modelUser = $modelUser;
-        return $this;
-    }
-    /**
-     * Get the value of accueilView
-     *
-     * @return AccueilView
-     */
-    public function getAccueilView(): AccueilView
-    {
-        return $this->accueilView;
-    }
-
-    /**
-     * Set the value of accueilView
-     *
-     * @param AccueilView $accueilView
-     *
-     * @return self
-     */
-    public function setAccueilView(AccueilView $accueilView): self
-    {
-        $this->accueilView = $accueilView;
+        $this->models = $models;
         return $this;
     }
 
     /**
-     * Get the value of registerView
+     * Get the value of views
      *
-     * @return RegisterView
+     * @return array
      */
-    public function getRegisterView(): RegisterView
+    public function getViews(): array
     {
-        return $this->registerView;
+        return $this->views;
     }
 
     /**
-     * Set the value of registerView
+     * Set the value of views
      *
-     * @param RegisterView $registerView
+     * @param array $views
      *
      * @return self
      */
-    public function setRegisterView(RegisterView $registerView): self
+    public function setViews(array $views): self
     {
-        $this->registerView = $registerView;
-        return $this;
-    }
-
-    /**
-     * Get the value of loginView
-     *
-     * @return LoginView
-     */
-    public function getLoginView(): LoginView
-    {
-        return $this->loginView;
-    }
-
-    /**
-     * Set the value of loginView
-     *
-     * @param LoginView $loginView
-     *
-     * @return self
-     */
-    public function setLoginView(LoginView $loginView): self
-    {
-        $this->loginView = $loginView;
-        return $this;
-    }
-
-    /**
-     * Get the value of accountView
-     *
-     * @return AccountView
-     */
-    public function getAccountView(): AccountView
-    {
-        return $this->accountView;
-    }
-
-    /**
-     * Set the value of accountView
-     *
-     * @param AccountView $accountView
-     *
-     * @return self
-     */
-    public function setAccountView(AccountView $accountView): self
-    {
-        $this->accountView = $accountView;
-        return $this;
-    }
-
-    /**
-     * Get the value of modifyView
-     *
-     * @return ModifyView
-     */
-    public function getModifyView(): ModifyView
-    {
-        return $this->modifyView;
-    }
-
-    /**
-     * Set the value of modifyView
-     *
-     * @param ModifyView $modifyView
-     *
-     * @return self
-     */
-    public function setModifyView(ModifyView $modifyView): self
-    {
-        $this->modifyView = $modifyView;
-        return $this;
-    }
-    
-    /**
-     * Get the value of deleteView
-     *
-     * @return DeleteView
-     */
-    public function getDeleteView(): DeleteView
-    {
-        return $this->deleteView;
-    }
-
-    /**
-     * Set the value of deleteView
-     *
-     * @param DeleteView $deleteView
-     *
-     * @return self
-     */
-    public function setDeleteView(DeleteView $deleteView): self
-    {
-        $this->deleteView = $deleteView;
+        $this->views = $views;
         return $this;
     }
     // #endregion
     //CONSTRUCT
-    public function __construct(ModelUser $newModelUser)
-    {
-        $this->modelUser = $newModelUser;//On crée sa propre vue pour alléger le code
-        $this->accueilView = new AccueilView();
-        $this->registerView = new RegisterView();
-        $this->loginView = new LoginView();
-        $this->accountView = new AccountView();
-        $this->modifyView = new ModifyView();
-        $this->deleteView = new DeleteView();
-    }
+    
     //METHODS
-    public function render():void{
-
+    public function addModel(string $key, Model $newModel):self{
+        $this->models[$key] = $newModel;
+        return $this;
     }
-
-
+    public function addView(string $key, View $newView):self{
+        $this->views[$key] = $newView;
+        return $this;
+    }
+    public function removeModel(string $key) : self {
+        unset($this->model[$key]);
+        return $this;
+    }
+    public function removeView(string $key) : self {
+        unset($this->view[$key]);
+        return $this;
+    }
+    public function render():void{
+        if(array_key_exists('hearder',$this->getViews())){
+            $this->getViews()['hearder']->display();
+        }
+        if(array_key_exists('main',$this->getViews())){
+            $this->getViews()['main']->display();
+        }
+        if(array_key_exists('footer',$this->getViews())){
+            $this->getViews()['footer']->display();
+        }
+    }
 }
