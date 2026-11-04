@@ -4,5 +4,5 @@ RewriteEngine On
 RewriteBase /Exercices/Exercice1/
 
 # Tout ce qui n'est pas déjà dans public/ y est envoyé
-RewriteCond %{REQUEST_URI} !/public/
+RewriteCond %{REQUEST_URI} !/Exercices/Exercice1/public/
 RewriteRule ^(.*)$ public/$1 [L]
